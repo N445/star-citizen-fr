@@ -2,21 +2,28 @@
 
 # Comment installer la traduction
 
-## Méthode 1 : Installation automatique avec le fichier .bat
+## Méthode 1 : Installation automatique avec le fichier .bat (Recommandée)
 
 1. Téléchargez le fichier `download_trad.bat` depuis ce repository
 2. Déplacez le fichier dans votre dossier de jeu :
    - Pour LIVE : `Roberts Space Industries\StarCitizen\LIVE`
    - Pour PTU : `Roberts Space Industries\StarCitizen\PTU`
 3. Double-cliquez sur le fichier `download_trad.bat`
-4. Le script téléchargera automatiquement la traduction correspondante (LIVE ou PTU) selon le dossier où vous l'avez placé
+4. Le script détectera automatiquement votre environnement et téléchargera la traduction correspondante
+
+✅ **Pas besoin de choisir la branche**, le script s'adapte automatiquement !
 
 ## Méthode 2 : Installation manuelle
 
-1. Téléchargez les fichiers suivants depuis ce repository :
+⚠️ **Important** : Vous devez choisir la bonne branche selon votre environnement Star Citizen :
+- Pour **LIVE** : utilisez la branche `LIVE` de ce repository
+- Pour **PTU** : utilisez la branche `PTU` de ce repository
+
+1. Sélectionnez la branche correspondant à votre environnement de jeu sur GitHub
+2. Téléchargez les fichiers suivants :
    - Le fichier `user.cfg`
    - Le dossier complet `data`
-2. Copiez ces fichiers à la racine de votre dossier de jeu :
+3. Copiez ces fichiers à la racine de votre dossier de jeu :
    - Pour LIVE : `Roberts Space Industries\StarCitizen\LIVE`
    - Pour PTU : `Roberts Space Industries\StarCitizen\PTU`
 3. Votre structure de dossiers devrait ressembler à :
