@@ -1,4 +1,4 @@
-> ⚠️ Ceci n'est pas une traduction complète volontairement, c'est une traduction partielle, avec les descriptions de quêtes, dialogues, journal, descriptions d'objets, de vaisseaux, les blueprints des grades de composant et l'hephaestanite (abrégé "hepha") ⚠️
+> ⚠️ Ceci n'est pas une traduction complète volontairement, c'est une traduction partielle, avec les descriptions de quêtes, dialogues, journal, descriptions d'objets, de vaisseaux, les blueprints des grades de composant et l'hephaestanite (abrégé "hepha"). Certaines traductions absentes chez Circus peuvent être générées par IA. ⚠️
 
 > 🌐 Traduction française basée sur le travail de [Circus](https://traduction.circuspes.fr/download/)
 > 📋 Contenu des blueprints des grades de composant issu de [SC One Page Translations par MrKraken](https://github.com/MrKraken/SC-One-Page-Translations)
