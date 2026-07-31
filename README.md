@@ -6,6 +6,10 @@
 
 ## Méthode 1 : Installation automatique avec le fichier .bat (Recommandée)
 
+
+[![Télécharger](https://img.shields.io/badge/⬇_Télécharger_le_script-v1.0-4CAF50?style=for-the-badge&logo=windows)](https://github.com/N445/star-citizen-fr/releases/latest/download/download_trad.bat)
+
+
 1. Téléchargez le fichier `download_trad.bat` depuis ce repository
 2. Déplacez le fichier dans votre dossier de jeu :
    - Pour LIVE : `Roberts Space Industries\StarCitizen\LIVE`
