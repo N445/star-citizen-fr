@@ -43,15 +43,18 @@ if errorlevel 2 goto :choice_alternative
 goto :choice_originale
 
 :choice_alternative
-set LANG_FOLDER=french_(alternative)
+set SOURCE_FOLDER=french_(alternative)
+set LANG_FOLDER=spanish_(spain)
 set LANG_LABEL=Alternative
 goto :choice_done
 
 :choice_originale
+set SOURCE_FOLDER=french_(france)
 set LANG_FOLDER=french_(france)
 set LANG_LABEL=Originale
 
 :choice_done
+set SOURCE_PATH=%LOCALIZATION_PATH%\%SOURCE_FOLDER%
 set FOLDER_PATH=%LOCALIZATION_PATH%\%LANG_FOLDER%
 
 echo.
@@ -117,9 +120,9 @@ echo.
 
 echo [ETAPE 3/4] Installation des fichiers...
 
-if not exist "temp_extract\star-citizen-fr-%BRANCH%\%FOLDER_PATH%" (
+if not exist "temp_extract\star-citizen-fr-%BRANCH%\%SOURCE_PATH%" (
     echo.
-    echo [ERREUR] Le dossier "%FOLDER_PATH%" n'a pas ete trouve dans l'archive.
+    echo [ERREUR] Le dossier "%SOURCE_PATH%" n'a pas ete trouve dans l'archive.
     echo.
     echo Cette version de traduction n'est peut-etre pas encore disponible sur la branche %BRANCH%.
     echo.
@@ -130,7 +133,7 @@ if not exist "temp_extract\star-citizen-fr-%BRANCH%\%FOLDER_PATH%" (
 )
 
 echo [INFO] Installation du dossier "%FOLDER_PATH%"...
-xcopy /E /I /Y "temp_extract\star-citizen-fr-%BRANCH%\%FOLDER_PATH%" "%FOLDER_PATH%" >nul
+xcopy /E /I /Y "temp_extract\star-citizen-fr-%BRANCH%\%SOURCE_PATH%" "%FOLDER_PATH%" >nul
 if %ERRORLEVEL% equ 0 (
     echo [OK] Dossier "%FOLDER_PATH%" installe
 ) else (
