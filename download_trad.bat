@@ -4,7 +4,7 @@ setlocal enabledelayedexpansion
 
 set START_TIME=%time%
 set REPO_URL=https://github.com/N445/star-citizen-fr/archive/refs/heads/
-set FOLDER_PATH=data
+set LOCALIZATION_PATH=data\Localization
 set FILE_PATH=user.cfg
 set BRANCH=
 
@@ -32,6 +32,33 @@ if "%CURRENT_DIR%"=="LIVE" (
 
 echo [INFO] Branche detectee : %BRANCH%
 echo [INFO] Emplacement : %cd%
+echo.
+
+echo Quelle version de la traduction voulez-vous installer ?
+echo   1. Originale
+echo   2. Alternative
+echo.
+choice /c 12 /n /m "Votre choix (1 ou 2) : "
+if errorlevel 2 goto :choice_alternative
+goto :choice_originale
+
+:choice_alternative
+set SOURCE_FOLDER=french_(alternative)
+set LANG_FOLDER=spanish_(spain)
+set LANG_LABEL=Alternative
+goto :choice_done
+
+:choice_originale
+set SOURCE_FOLDER=french_(france)
+set LANG_FOLDER=french_(france)
+set LANG_LABEL=Originale
+
+:choice_done
+set SOURCE_PATH=%LOCALIZATION_PATH%\%SOURCE_FOLDER%
+set FOLDER_PATH=%LOCALIZATION_PATH%\%LANG_FOLDER%
+
+echo.
+echo [INFO] Version choisie : %LANG_LABEL% (%LANG_FOLDER%)
 echo.
 
 set ZIP_URL=%REPO_URL%%BRANCH%.zip
@@ -93,12 +120,11 @@ echo.
 
 echo [ETAPE 3/4] Installation des fichiers...
 
-if not exist "temp_extract\star-citizen-fr-%BRANCH%\%FOLDER_PATH%" (
+if not exist "temp_extract\star-citizen-fr-%BRANCH%\%SOURCE_PATH%" (
     echo.
-    echo [ERREUR] Le dossier "%FOLDER_PATH%" n'a pas ete trouve dans l'archive.
+    echo [ERREUR] Le dossier "%SOURCE_PATH%" n'a pas ete trouve dans l'archive.
     echo.
-    echo Contenu de l'archive :
-    dir /b "temp_extract\star-citizen-fr-%BRANCH%"
+    echo Cette version de traduction n'est peut-etre pas encore disponible sur la branche %BRANCH%.
     echo.
     del %ZIP_FILE% 2>nul
     rmdir /s /q temp_extract 2>nul
@@ -107,27 +133,19 @@ if not exist "temp_extract\star-citizen-fr-%BRANCH%\%FOLDER_PATH%" (
 )
 
 echo [INFO] Installation du dossier "%FOLDER_PATH%"...
-xcopy /E /I /Y "temp_extract\star-citizen-fr-%BRANCH%\%FOLDER_PATH%" "%FOLDER_PATH%" >nul
+xcopy /E /I /Y "temp_extract\star-citizen-fr-%BRANCH%\%SOURCE_PATH%" "%FOLDER_PATH%" >nul
 if %ERRORLEVEL% equ 0 (
     echo [OK] Dossier "%FOLDER_PATH%" installe
 ) else (
     echo [ERREUR] Echec de la copie du dossier "%FOLDER_PATH%"
 )
 
-if exist "%FILE_PATH%" (
-    echo [INFO] Fichier "%FILE_PATH%" deja present, conservation de votre configuration
+echo [INFO] Configuration de "%FILE_PATH%" (g_language = %LANG_FOLDER%)...
+powershell -NoProfile -Command "$p='%FILE_PATH%'; $newLine='g_language = %LANG_FOLDER%'; if (Test-Path $p) { $lines = @(Get-Content $p); $found = $false; $out = foreach ($l in $lines) { if ($l.TrimStart().StartsWith('g_language')) { $found = $true; $newLine } else { $l } }; if (-not $found) { $out += $newLine }; Set-Content -Path $p -Value $out } else { Set-Content -Path $p -Value $newLine }"
+if %ERRORLEVEL% equ 0 (
+    echo [OK] Fichier "%FILE_PATH%" configure
 ) else (
-    if not exist "temp_extract\star-citizen-fr-%BRANCH%\%FILE_PATH%" (
-        echo [ATTENTION] Le fichier "%FILE_PATH%" n'a pas ete trouve dans l'archive.
-    ) else (
-        echo [INFO] Installation du fichier "%FILE_PATH%"...
-        copy /Y "temp_extract\star-citizen-fr-%BRANCH%\%FILE_PATH%" "%FILE_PATH%" >nul
-        if %ERRORLEVEL% equ 0 (
-            echo [OK] Fichier "%FILE_PATH%" installe
-        ) else (
-            echo [ERREUR] Echec de la copie du fichier "%FILE_PATH%"
-        )
-    )
+    echo [ERREUR] Echec de la configuration du fichier "%FILE_PATH%"
 )
 
 echo.
@@ -145,9 +163,10 @@ echo   Installation terminee avec succes !
 echo ================================================
 echo.
 echo Branche : %BRANCH%
+echo Version : %LANG_LABEL% (%LANG_FOLDER%)
 echo Elements installes :
-echo   - Dossier "data" (fichiers de traduction)
-if exist "%FILE_PATH%" echo   - Fichier "user.cfg" (configuration)
+echo   - Dossier "%FOLDER_PATH%" (fichiers de traduction)
+echo   - Fichier "user.cfg" (configuration)
 echo.
 echo Heure de debut : %START_TIME%
 echo Heure de fin   : %END_TIME%
